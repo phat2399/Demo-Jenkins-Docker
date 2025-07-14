@@ -34,7 +34,7 @@ def home():
     </head>
     <body>
         <div class="container">
-            <h1>🚀 CI/CD Pipeline Đã Tự Động Cập Nhật Nhé!</h1>
+            <h1>🚀 CI/CD Pipeline Đã Tự Động Cập Nhật Nhé !!!</h1>
             <p>Trang này đã được triển khai tự động bởi Jenkins.</p>
         </div>
     </body>
