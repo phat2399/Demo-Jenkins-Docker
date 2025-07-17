@@ -10,7 +10,13 @@ pipeline {
         }
         stage('Test') {
             steps {
-                echo "Testing..."
+                echo "Dang chay kiem thu tu dong..."
+                script {
+                    // Chay pytest ben trong Docker image vua build de dam bao
+                    // moi truong test giong het moi truong se deploy.
+                    // Container se tu dong bi xoa sau khi chay xong test.
+                    sh 'docker run --rm your-docker-id/flask-app:latest pytest'
+                }
             }
         }
         stage('Deploy') {
