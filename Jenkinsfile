@@ -1,30 +1,34 @@
 pipeline {
     agent any
+    environment {
+        AWS_ACCOUNT_ID      = "927875589544" 
+        AWS_DEFAULT_REGION  = "ap-southeast-1"    
+        ECR_REPOSITORY_NAME = "demolab8" // Tên repo ECR 
+        EKS_CLUSTER_NAME    = "demo-eks" // Tên cluster EKS 
+    }
     stages {
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Dang build Docker image...'
-                // Thay 'your-docker-id/flask-app' bang ten ban muon
-                sh 'docker build -t your-docker-id/flask-app:latest .'
+                sh "docker build -t ${ECR_REPOSITORY_NAME}:latest ."
             }
         }
-        stage('Test') {
+        stage('Push to Amazon ECR') {
             steps {
-                echo "Dang chay kiem thu tu dong..."
                 script {
-                    // Chay pytest ben trong Docker image vua build de dam bao
-                    // moi truong test giong het moi truong se deploy.
-                    // Container se tu dong bi xoa sau khi chay xong test.
-                    sh 'docker run --rm your-docker-id/flask-app:latest pytest'
+                    def ecrUri = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"
+                    sh "docker tag ${ECR_REPOSITORY_NAME}:latest ${ecrUri}"
+                    sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+                    sh "docker push ${ecrUri}"
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy to EKS') {
             steps {
-                echo 'Dang trien khai container....'
-                sh 'docker stop flask-app-container || true'
-                sh 'docker rm flask-app-container || true'
-                sh 'docker run -d --name flask-app-container -p 8000:8000 your-docker-id/flask-app:latest'
+                script {
+                    sh "aws eks --region ${AWS_DEFAULT_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}"
+                    sh "kubectl apply -f deployment.yaml"
+                    sh "kubectl apply -f service.yaml"
+                }
             }
         }
     }
