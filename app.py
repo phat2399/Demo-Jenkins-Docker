@@ -34,7 +34,7 @@ def home():
     </head>
     <body>
         <div class="container">
-            <h1>🚀 DEMO MỞ RỘNG Tích hợp Kubernetes để triển khai trên AWS EKS Thành công nha thầy!!!</h1>
+            <h1>🚀 DEMO MỞ RỘNG Tích hợp Kubernetes để triển khai trên AWS EKS Thành công nha thầy</h1>
             <p>Trang này đã được triển khai tự động bởi Jenkins.</p>
         </div>
     </body>
