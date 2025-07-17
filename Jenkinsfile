@@ -1,10 +1,12 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID      = 927875589544
-        AWS_DEFAULT_REGION  = ap-southeast-1 
-        ECR_REPOSITORY_NAME = demolab8 
-        EKS_CLUSTER_NAME    = demo-eks
+        // QUAN TRỌNG: Tất cả các giá trị phải được đặt trong dấu ngoặc kép ""
+        // Tôi đã điền sẵn các giá trị của bạn vào đây
+        AWS_ACCOUNT_ID      = "927875589544"
+        AWS_DEFAULT_REGION  = "ap-southeast-1"
+        ECR_REPOSITORY_NAME = "demolab8"
+        EKS_CLUSTER_NAME    = "demo-eks"
     }
     stages {
         stage('Build Docker Image') {
