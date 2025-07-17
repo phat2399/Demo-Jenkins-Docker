@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Dang trien khai container...'
+                echo 'Dang trien khai container....'
                 sh 'docker stop flask-app-container || true'
                 sh 'docker rm flask-app-container || true'
                 sh 'docker run -d --name flask-app-container -p 8000:8000 your-docker-id/flask-app:latest'
