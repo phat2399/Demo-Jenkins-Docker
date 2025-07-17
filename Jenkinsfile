@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        AWS_ACCOUNT_ID      = "927875589544" 
-        AWS_DEFAULT_REGION  = "ap-southeast-1"    
-        ECR_REPOSITORY_NAME = "demolab8" // Tên repo ECR 
-        EKS_CLUSTER_NAME    = "demo-eks" // Tên cluster EKS 
+        AWS_ACCOUNT_ID      = 927875589544
+        AWS_DEFAULT_REGION  = ap-southeast-1 
+        ECR_REPOSITORY_NAME = demolab8 
+        EKS_CLUSTER_NAME    = demo-eks 
     }
     stages {
         stage('Build Docker Image') {
