@@ -10,4 +10,4 @@ def test_home_page_content():
     """Kiểm tra trang chủ có chứa nội dung mong muốn không."""
     with app.test_client() as client:
         response = client.get('/')
-        assert b"CI/CD Pipeline" in response.data
+        assert b"Chuoi nay chac chan sai" in response.data 
